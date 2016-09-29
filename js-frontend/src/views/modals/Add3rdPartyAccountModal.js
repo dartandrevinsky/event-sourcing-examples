@@ -116,6 +116,7 @@ export class Add3rdPartyAccountModal extends React.Component {
             <div className="form-group">
               <Select
                 name="owner"
+                className="ref-create-owner"
                 onBlurResetsInput={false}
                 asyncOptions={this.getOwnersOptions.bind(this)}
                 matchProp="label"
@@ -133,6 +134,7 @@ export class Add3rdPartyAccountModal extends React.Component {
             <div className="form-group">
               <Select
                 name="account"
+                className="ref-create-account"
                 value={read(this.props.data, 'form.account', '')}
                 disabled={ownersLoading || disabled}
                 clearable={false}
@@ -146,7 +148,7 @@ export class Add3rdPartyAccountModal extends React.Component {
             </div>
 
             <Input type="text"
-                   className="account-create-description"
+                   className="ref-create-description"
                    label="Title:"
                    placeholder="Title"
                    name="title"
@@ -156,7 +158,7 @@ export class Add3rdPartyAccountModal extends React.Component {
                    onChange={this.handleInput.bind(this, 'title')} />
 
             <Input type="textarea"
-                   className="account-create-description"
+                   className="ref-create-description"
                    label="Description:"
                    placeholder="Description"
                    name="description"

@@ -27,38 +27,29 @@ export default {
       .navigate()
       .login(globals.otherUserData);
 
-    client.end();
-    return;
-
-    //todo: solve select changing
-
     const [ userQuery, accountQuery, title, description ] = '|||'.split('|');
 
     instancesPage
       .navigate()
-      .createRef({ userQuery, accountQuery, title, description }, false);
+      .createRef({ userQuery, accountQuery, title, description }, client, false);
 
     instancesPage.expect.element('@modalCreateRefErrors').to.be.visible;
     instancesPage.expect.element('@modalCreateRefForm').to.be.visible;
 
-    const [ refAccountTitle, refAccountDescription ] = 'Johns`s Initial Account|Johns`s Initial Account'.split('|');;
+    const [ refAccountTitle, refAccountDescription ] = 'Johns`s Initial Account|Johns`s Initial Account'.split('|');
     instancesPage
       .createRef({
         userQuery: globals.userData.email,
         accountQuery: globals.accountOne.title,
         title: refAccountTitle,
         description: refAccountDescription
-      }, true);
+      }, client, true);
 
     instancesPage.expect.element('@modalCreateRefErrors').to.not.be.present;
     instancesPage.expect.element('@modalCreateRefForm').to.not.be.present;
 
-    instancesPage.expect.element('@accountLink').to.be.visible;
-
-    instancesPage.expect.element('@firstAccountLink').to.be.visible;
-    instancesPage.expect.element('@secondAccountLink').to.not.be.present;
-
-    instancesPage.expect.element('@firstAccountLink').text.to.contain(refAccountTitle);
+    instancesPage.expect.element('@refAccountBtn').to.be.visible;
+    instancesPage.expect.element('@refAccountBtn').text.to.contain(refAccountTitle);
 
     client.end();
   }

@@ -119,6 +119,11 @@ export class Account extends React.Component {
   initiateTransfer(){
     const { dispatch, params, transfer } = this.props;
     const { accountId } = params;
+    const { form } = transfer;
+    const formKeys = Object.keys(form);
+    if (!formKeys.length || !form['amount'] || !form['account']) {
+      return;
+    }
     dispatch(A.makeTransfer(accountId, transfer.form ))
       .then(() => new Promise((rs) => {
           setTimeout(() => {
@@ -226,6 +231,7 @@ export class Account extends React.Component {
           <Col sm={4}>
             <label>Transfer To:</label>
             <Select
+              className="transfer-account-dd"
               value={read(this.props.transfer, 'form.account', '')}
               clearable={true}
               options={transferTo}
