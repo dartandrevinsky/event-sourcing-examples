@@ -55,7 +55,15 @@ const transferOne = (() => {
 
 })();
 
+const transferTwo = (() => {
 
+  const [ selectAccount, amount, description ] = 'true|4|Four bucks'.split('|');
+
+  return {
+    selectAccount, amount, description
+  }
+
+})();
 
 
 
@@ -65,5 +73,6 @@ export default {
   otherUserData,
   accountOne,
   accountTwo,
-  transferOne
+  transferOne,
+  transferTwo
 };
