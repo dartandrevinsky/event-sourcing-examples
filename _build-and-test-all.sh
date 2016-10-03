@@ -4,6 +4,8 @@ set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+ORIGINAL_DIR=$(pwd)
+
 DOCKER_COMPOSE="docker-compose -p event-sourcing-examples"
 
 if [ "$1" = "-f" ] ; then
@@ -43,6 +45,7 @@ if [ -z "$SPRING_DATA_MONGODB_URI" ] ; then
 fi
 
 export SERVICE_HOST=$DOCKER_HOST_IP
+export SERVICE_PORT=8080
 
 ./gradlew $* build -x :e2e-test:test
 
@@ -59,6 +62,14 @@ $DIR/wait-for-services.sh $DOCKER_HOST_IP 8080 8081 8082
 set -e
 
 ./gradlew -a $* :e2e-test:cleanTest :e2e-test:test -P ignoreE2EFailures=false
+
+cd $DIR/js-frontend
+
+npm i
+npm run e2e-setup
+npm run test-e2e
+
+cd $ORIGINAL_DIR
 
 if [ $NO_RM = false ] ; then
   ${DOCKER_COMPOSE?} stop
