@@ -22,7 +22,7 @@ const loginCommands = {
 };
 
 export default {
-  url: 'http://localhost:8080/#/signin',
+  url: `http://${ process.env.SERVICE_HOST || 'localhost' }:${ process.env.SERVICE_PORT || '8080' }/#/signin`,
   commands: [loginCommands],
   elements: {
     emailInput: {

@@ -22,7 +22,7 @@ const signupCommands = {
 };
 
 export default {
-  url: 'http://localhost:8080/#/register',
+  url: `http://${ process.env.SERVICE_HOST || 'localhost' }:${ process.env.SERVICE_PORT || '8080' }/#/register`,
   commands: [signupCommands],
   elements: {
     fNameInput: {

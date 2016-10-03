@@ -79,7 +79,7 @@ const mainCommands = {
 };
 
 export default {
-  url: 'http://localhost:8080/#/',
+  url: `http://${ process.env.SERVICE_HOST || 'localhost' }:${ process.env.SERVICE_PORT || '8080' }/#/`,
   commands: [ mainCommands ],
   elements: {
     signOutLink: {
