@@ -19,22 +19,38 @@ const mainCommands = {
     return this;
   },
 
-  createRef({ userQuery, accountQuery, title, description }, waitToHide) {
+  createRef({ userQuery, accountQuery, title, description }, client, waitToHide) {
+
     this
       .waitForElementVisible('@modalCreateRefHook')
       .click('@modalCreateRefHook');
 
-    this.api.pause(500);
     this.waitForElementVisible('@modalCreateRefModal')
       .waitForElementVisible('@modalCreateRefForm')
-      .waitForElementVisible('@modalCreateRefCustomerField')
-      .click('@modalCreateRefCustomerField')
-      .waitForElementVisible('@modealCreateRefCustomerOpen')
-      .waitForElementVisible('@modalCreateRefCustomerInput')
-      .setValue('@modalCreateRefCustomerInput', userQuery)
-      .waitForElementVisible('@modealCreateRefDDOption')
-      .click('@modealCreateRefDDOption')
-      .setValue('@modalCreateRefAccount', accountQuery)
+      .waitForElementVisible('@modalCreateRefCustomerField');
+
+    if (userQuery) {
+      this
+        .click('.Select.ref-create-owner .Select-control .Select-arrow-zone')
+        // .click('//*[contains(@class, \'Select\')][contains(@class, \'ref-create-owner\')]//*[contains(@class, \'Select-arrow-zone\')]');
+        .waitForElementVisible('.Select.ref-create-owner.is-open.is-focused .Select-menu-outer > .Select-menu')
+        .waitForElementVisible('.Select.ref-create-owner .Select-control .Select-input > input')
+        .setValue('.Select.ref-create-owner .Select-control .Select-input > input', userQuery.split(''))
+        .waitForElementVisible('.Select.ref-create-owner.is-open.is-focused .Select-menu-outer > .Select-menu > .Select-option:first-child')
+        .click('.Select.ref-create-owner.is-open.is-focused .Select-menu-outer > .Select-menu > .Select-option:first-child');
+
+      this.api.pause(1500);
+    }
+
+    if (accountQuery) {
+      this
+        .click('.Select.ref-create-account .Select-control .Select-arrow-zone')
+        .waitForElementVisible('.Select.ref-create-account.is-open.is-focused .Select-menu-outer > .Select-menu > .Select-option:first-child')
+        .click('.Select.ref-create-account.is-open.is-focused .Select-menu-outer > .Select-menu > .Select-option:first-child');
+    }
+
+    this
+      .clearValue('@modalCreateRefTitle')
       .setValue('@modalCreateRefTitle', title)
       .setValue('@modalCreateRefDescription', description)
       .click('@modalCreateRefSubmit');
@@ -45,6 +61,13 @@ const mainCommands = {
     }
 
     return this;
+  },
+
+  selectFirstAccount() {
+    return this
+      .waitForElementVisible('@firstAccountLink')
+      .click('@firstAccountLink')
+      .waitForElementNotPresent('@firstAccountLink');
   },
 
   signOut() {
@@ -99,7 +122,8 @@ export default {
       selector: 'form.account-create-ref'
     },
     modalCreateRefCustomerField: {
-      selector: 'form.account-create-ref .Select.is-searchable div.Select-input'
+      selector: 'form.account-create-ref .Select.is-searchable'
+      // selector: 'form.account-create-ref .Select.is-searchable div.Select-input'
     },
     modalCreateRefCustomerInput: {
       selector: 'form.account-create-ref .Select.is-searchable div.Select-input > input'
@@ -134,6 +158,10 @@ export default {
     },
     secondAccountLink: {
       selector: '(//a[starts-with(@href, "#/account/")])[2]',
+      locateStrategy: 'xpath'
+    },
+    refAccountBtn: {
+      selector: '//table/tbody/tr/td/button[@disabled]',
       locateStrategy: 'xpath'
     },
   }

@@ -4512,6 +4512,7 @@ webpackJsonp([0,3],{
 	              { className: "form-group" },
 	              _react2.default.createElement(_reactSelect2.default, {
 	                name: "owner",
+	                className: "ref-create-owner",
 	                onBlurResetsInput: false,
 	                asyncOptions: this.getOwnersOptions.bind(this),
 	                matchProp: "label",
@@ -4534,6 +4535,7 @@ webpackJsonp([0,3],{
 	              { className: "form-group" },
 	              _react2.default.createElement(_reactSelect2.default, {
 	                name: "account",
+	                className: "ref-create-account",
 	                value: (0, _readProp2.default)(this.props.data, 'form.account', ''),
 	                disabled: ownersLoading || disabled,
 	                clearable: false,
@@ -4546,7 +4548,7 @@ webpackJsonp([0,3],{
 	              })
 	            ),
 	            _react2.default.createElement(_Input2.default, { type: "text",
-	              className: "account-create-description",
+	              className: "ref-create-description",
 	              label: "Title:",
 	              placeholder: "Title",
 	              name: "title",
@@ -4555,7 +4557,7 @@ webpackJsonp([0,3],{
 	              errors: (0, _readProp2.default)(this.props.data, 'errors.title', []),
 	              onChange: this.handleInput.bind(this, 'title') }),
 	            _react2.default.createElement(_Input2.default, { type: "textarea",
-	              className: "account-create-description",
+	              className: "ref-create-description",
 	              label: "Description:",
 	              placeholder: "Description",
 	              name: "description",
@@ -5639,7 +5641,12 @@ webpackJsonp([0,3],{
 	      var params = _props3.params;
 	      var transfer = _props3.transfer;
 	      var accountId = params.accountId;
+	      var form = transfer.form;
 	
+	      var formKeys = Object.keys(form);
+	      if (!formKeys.length || !form['amount'] || !form['account']) {
+	        return;
+	      }
 	      dispatch(A.makeTransfer(accountId, transfer.form)).then(function () {
 	        return new Promise(function (rs) {
 	          setTimeout(function () {
@@ -5844,6 +5851,7 @@ webpackJsonp([0,3],{
 	              "Transfer To:"
 	            ),
 	            _react2.default.createElement(_reactSelect2.default, {
+	              className: "transfer-account-dd",
 	              value: (0, _readProp2.default)(this.props.transfer, 'form.account', ''),
 	              clearable: true,
 	              options: transferTo,
@@ -7157,4 +7165,4 @@ webpackJsonp([0,3],{
 /***/ }
 
 });
-//# sourceMappingURL=app.30980d75b78111237ddf.js.map
+//# sourceMappingURL=app.fd05c6aaa4ba97419c4e.js.map

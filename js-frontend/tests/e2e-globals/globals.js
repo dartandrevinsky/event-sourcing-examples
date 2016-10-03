@@ -45,11 +45,34 @@ const accountTwo = (() => {
 })();
 
 
+const transferOne = (() => {
+
+  const [ selectAccount, amount, description ] = 'true|2|Two bucks'.split('|');
+
+  return {
+    selectAccount, amount, description
+  }
+
+})();
+
+const transferTwo = (() => {
+
+  const [ selectAccount, amount, description ] = 'true|4|Four bucks'.split('|');
+
+  return {
+    selectAccount, amount, description
+  }
+
+})();
+
+
 
 export default {
   waitForConditionTimeout: 10000,
   userData,
   otherUserData,
   accountOne,
-  accountTwo
+  accountTwo,
+  transferOne,
+  transferTwo
 };
