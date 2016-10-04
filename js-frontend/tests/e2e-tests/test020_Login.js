@@ -13,6 +13,8 @@ export default {
       .navigate()
       .login({email, pass});
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_020_${ globals.nextFilenameIdx() }.png`);
+
     loginPage.expect.element('@formError').to.be.visible;
 
     loginPage
@@ -21,11 +23,15 @@ export default {
 
     instancesPage.expect.element('@signOutLink').to.be.visible;
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_020_${ globals.nextFilenameIdx() }.png`);
+
     instancesPage
       .navigate()
       .signOut();
 
     client.assert.urlContains('/#/signin');
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_020_${ globals.nextFilenameIdx() }.png`);
 
     client.end();
   }

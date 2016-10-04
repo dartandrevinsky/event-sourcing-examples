@@ -15,10 +15,10 @@ export default {
       .navigate()
       .login(globals.otherUserData);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
+
     instancesPage
       .createAccount(globals.accountOne, true);
-    // instancesPage
-    //   .createAccount(globals.accountOne, true);
 
     instancesPage.expect.element('@firstAccountLink').to.be.visible;
     // instancesPage.expect.element('@secondAccountLink').to.be.visible;
@@ -26,22 +26,31 @@ export default {
     instancesPage.expect.element('@firstAccountLink').text.to.contain(globals.accountOne.title);
     // instancesPage.expect.element('@secondAccountLink').text.to.contain(globals.accountTwo.title);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
 
     instancesPage.selectFirstAccount();
     client.assert.urlContains('/#/account/');
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
+
     const [ refAccountTitle ] = 'Johns`s Initial Account'.split('|');
 
     accountPage.makeTransfer(globals.transferTwo, true);
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
 
     accountPage.expect.element('@firstRowTypeCol').text.to.equal('Debit');
     accountPage.expect.element('@firstRowToCol').text.to.contain(refAccountTitle);
     accountPage.expect.element('@firstRowAmountCol').text.to.contain(globals.transferTwo.amount);
     accountPage.expect.element('@firstRowDescriptionCol').text.to.equal(globals.transferTwo.description);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
+
     instancesPage
       .navigate()
       .signOut();
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
 
     client.assert.urlContains('/#/signin');
 

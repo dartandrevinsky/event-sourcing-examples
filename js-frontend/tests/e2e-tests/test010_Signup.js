@@ -14,6 +14,8 @@ export default {
         fName, lName, email, pass, passConf, ssn
       }, false);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_010_${ globals.nextFilenameIdx() }.png`);
+
     signupPage.expect.element('@formError').to.be.visible;
 
     signupPage
@@ -21,6 +23,8 @@ export default {
       .signup(globals.userData, true);
 
     loginPage.expect.element('@emailLoginPageInput').to.be.visible;
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_010_${ globals.nextFilenameIdx() }.png`);
 
     client.end();
   }
