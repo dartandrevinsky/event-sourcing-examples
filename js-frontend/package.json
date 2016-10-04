@@ -11,7 +11,7 @@
     "watch": "webpack --progress --colors --watch --display-error-details --display-chunks --profile",
     "start-dev": "export PORT=3000 && webpack-dev-server --host 0.0.0.0",
     "e2e-setup": "node_modules/selenium-standalone/bin/selenium-standalone install",
-    "test-e2e": "nightwatch",
+    "test-e2e": "nightwatch tests/e2e-tests/test010_Signup.js tests/e2e-tests/test020_Login.js tests/e2e-tests/test030_CreateAccount.js tests/e2e-tests/test040_Create3rdPartyAccs.js tests/e2e-tests/test050_MakeTransfers.js tests/e2e-tests/test060_Make3rdPTransfers.js",
     "test-e2e-happy-path": "nightwatch tests/e2e-tests/test010_Signup.js tests/e2e-tests/test030_CreateAccount.js tests/e2e-tests/test050_MakeTransfers.js",
     "test-e2e-3rd-p": "nightwatch tests/e2e-tests/test010_Signup.js tests/e2e-tests/test030_CreateAccount.js tests/e2e-tests/test040_Create3rdPartyAccs.js tests/e2e-tests/test060_Make3rdPTransfers.js"
   },
