@@ -21,11 +21,14 @@ export default {
     instancesPage.expect.element('@firstAccountLink').text.to.contain(globals.accountOne.title);
     instancesPage.expect.element('@secondAccountLink').text.to.contain(globals.accountTwo.title);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_050_${ globals.nextFilenameIdx() }.png`);
 
     instancesPage.selectFirstAccount();
     client.assert.urlContains('/#/account/');
 
     accountPage.makeTransfer(globals.transferOne, true);
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_050_${ globals.nextFilenameIdx() }.png`);
 
     accountPage.expect.element('@firstRowTypeCol').text.to.equal('Debit');
     accountPage.expect.element('@firstRowToCol').text.to.equal(globals.accountTwo.title);
@@ -35,6 +38,8 @@ export default {
     instancesPage
       .navigate()
       .signOut();
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_050_${ globals.nextFilenameIdx() }.png`);
 
     client.assert.urlContains('/#/signin');
 

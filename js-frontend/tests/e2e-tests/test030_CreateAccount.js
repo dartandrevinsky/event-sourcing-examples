@@ -20,10 +20,14 @@ export default {
       .navigate()
       .createAccount({ title, amount, description }, false);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_030_${ globals.nextFilenameIdx() }.png`);
+
     instancesPage.expect.element('@modalCreateAccountErrors').to.be.visible;
 
     instancesPage
       .createAccount(globals.accountOne, true);
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_030_${ globals.nextFilenameIdx() }.png`);
 
     instancesPage.expect.element('@modalCreateAccountErrors').to.not.be.present;
     instancesPage.expect.element('@modalCreateAccountForm').to.not.be.present;
@@ -38,11 +42,15 @@ export default {
     instancesPage
       .createAccount(globals.accountTwo, true);
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_030_${ globals.nextFilenameIdx() }.png`);
+
     instancesPage.expect.element('@firstAccountLink').to.be.visible;
     instancesPage.expect.element('@secondAccountLink').to.be.visible;
 
     instancesPage.expect.element('@firstAccountLink').text.to.contain(globals.accountOne.title);
     instancesPage.expect.element('@secondAccountLink').text.to.contain(globals.accountTwo.title);
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_030_${ globals.nextFilenameIdx() }.png`);
 
     client.end();
   }

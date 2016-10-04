@@ -29,12 +29,16 @@ export default {
 
     const [ userQuery, accountQuery, title, description ] = '|||'.split('|');
 
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_040_${ globals.nextFilenameIdx() }.png`);
+
     instancesPage
       .navigate()
       .createRef({ userQuery, accountQuery, title, description }, client, false);
 
     instancesPage.expect.element('@modalCreateRefErrors').to.be.visible;
     instancesPage.expect.element('@modalCreateRefForm').to.be.visible;
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_040_${ globals.nextFilenameIdx() }.png`);
 
     const [ refAccountTitle, refAccountDescription ] = 'Johns`s Initial Account|Johns`s Initial Account'.split('|');
     instancesPage
@@ -44,6 +48,8 @@ export default {
         title: refAccountTitle,
         description: refAccountDescription
       }, client, true);
+
+    client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_040_${ globals.nextFilenameIdx() }.png`);
 
     instancesPage.expect.element('@modalCreateRefErrors').to.not.be.present;
     instancesPage.expect.element('@modalCreateRefForm').to.not.be.present;

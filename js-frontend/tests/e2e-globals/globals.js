@@ -65,7 +65,7 @@ const transferTwo = (() => {
 
 })();
 
-
+let nextFilenameIdx = 0;
 
 export default {
   waitForConditionTimeout: 10000,
@@ -74,5 +74,7 @@ export default {
   accountOne,
   accountTwo,
   transferOne,
-  transferTwo
+  transferTwo,
+  seed: (new Date() - 0).toString(),
+  nextFilenameIdx: () => nextFilenameIdx++
 };
