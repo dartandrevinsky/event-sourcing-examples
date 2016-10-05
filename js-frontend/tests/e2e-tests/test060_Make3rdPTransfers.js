@@ -40,7 +40,7 @@ export default {
     client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_060_${ globals.nextFilenameIdx() }.png`);
 
     accountPage.expect.element('@firstRowTypeCol').text.to.equal('Debit');
-    accountPage.expect.element('@firstRowToCol').text.to.contain(refAccountTitle);
+    accountPage.expect.element('@firstRowToCol').text.to.contain(refAccountTitle.substr(0, 20));
     accountPage.expect.element('@firstRowAmountCol').text.to.contain(globals.transferTwo.amount);
     accountPage.expect.element('@firstRowDescriptionCol').text.to.equal(globals.transferTwo.description);
 

@@ -15,7 +15,7 @@ const loginCommands = {
     });
 
     return this.waitForElementVisible('@loginButton')
-      .click('@loginButton')
+      // .click('@loginButton')
       .submitForm('@loginButton');
 
   }

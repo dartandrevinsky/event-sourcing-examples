@@ -55,7 +55,7 @@ export default {
     instancesPage.expect.element('@modalCreateRefForm').to.not.be.present;
 
     instancesPage.expect.element('@refAccountBtn').to.be.visible;
-    instancesPage.expect.element('@refAccountBtn').text.to.contain(refAccountTitle);
+    instancesPage.expect.element('@refAccountBtn').text.to.contain(refAccountTitle.substr(0, 20));
 
     client.end();
   }
