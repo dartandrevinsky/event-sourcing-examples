@@ -72,6 +72,7 @@ set -e
 
 if [ $JS_TESTS_RUN = true] ; then
   cd $DIR/js-frontend
+  rm -r ./reports/
 
   npm i
   npm run e2e-setup
