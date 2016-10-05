@@ -67,7 +67,8 @@ cd $DIR/js-frontend
 
 npm i
 npm run e2e-setup
-npm run test-e2e
+
+xvfb-run --server-args="-screen 0 1600x1200x24" nightwatch
 
 cd $ORIGINAL_DIR
 
