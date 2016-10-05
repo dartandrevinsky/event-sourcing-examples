@@ -28,6 +28,13 @@ if [ "$1" = "--no-rm" ] ; then
   shift
 fi
 
+JS_TESTS_RUN=false
+
+if [ "$1" = "--run-js-tests" ] ; then
+  JS_TESTS_RUN=true
+  shift
+fi
+
 ${DOCKER_COMPOSE?} up -d mongodb $EXTRA_INFRASTRUCTURE_SERVICES
 
 if [ -z "$DOCKER_HOST_IP" ] ; then
@@ -63,14 +70,16 @@ set -e
 
 ./gradlew -a $* :e2e-test:cleanTest :e2e-test:test -P ignoreE2EFailures=false
 
-cd $DIR/js-frontend
+if [ $JS_TESTS_RUN = true] ; then
+  cd $DIR/js-frontend
 
-npm i
-npm run e2e-setup
+  npm i
+  npm run e2e-setup
 
-xvfb-run --server-args="-screen 0 1600x1200x24" nightwatch
+  xvfb-run --server-args="-screen 0 1600x1200x24" nightwatch
 
-cd $ORIGINAL_DIR
+  cd $ORIGINAL_DIR
+fi
 
 if [ $NO_RM = false ] ; then
   ${DOCKER_COMPOSE?} stop
