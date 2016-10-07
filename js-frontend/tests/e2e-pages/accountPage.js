@@ -47,6 +47,7 @@ export default {
       selector: '//button[@type=\'button\'][text()=\'Transfer\']',
       locateStrategy: 'xpath'
     },
+    transferFormErrors: '.transfer-form .inline-error-item',
     secondRow: {
       selector: '//table/tbody/tr[2]',
       locateStrategy: 'xpath'

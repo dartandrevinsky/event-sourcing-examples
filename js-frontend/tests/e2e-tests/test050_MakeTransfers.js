@@ -26,6 +26,14 @@ export default {
     instancesPage.selectFirstAccount();
     client.assert.urlContains('/#/account/');
 
+    const [ selectAccount, amount, description ] = '||'.split('|');
+
+    accountPage.makeTransfer({
+      selectAccount, amount, description
+    });
+
+    accountPage.expect.element('@transferFormErrors').to.be.visible;
+
     accountPage.makeTransfer(globals.transferOne, true);
 
     client.saveScreenshot(`./reports/SCREENSHOT_${ globals.seed }_050_${ globals.nextFilenameIdx() }.png`);

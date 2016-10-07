@@ -3,21 +3,14 @@
  */
 import React from "react";
 import { connect } from "react-redux";
-
+import { Link, IndexLink } from "react-router";
 import { PageHeader, OverlayTrigger, Tooltip, Grid, Col, Row, Nav, NavItem, ButtonGroup, Button, Table } from "react-bootstrap";
-import * as BS  from "react-bootstrap";
-// import Spinner from "react-loader";
-import Select from "react-select";
-import Input from "../controls/bootstrap/Input";
+import { TransferForm } from '../components/TransferForm';
 import { Money, moneyText } from '../components/Money';
 import { TransfersTable } from '../components/TransfersTable';
-
-import { Link, IndexLink } from "react-router";
-
 import IndexPanel from "./../components/partials/IndexPanel";
 import * as Modals from './modals';
 import * as A from '../actions/entities';
-import read from '../utils/readProp';
 import { blocked } from '../utils/blockedExecution';
 
 const resetModals = {
@@ -112,28 +105,6 @@ export class Account extends React.Component {
     });
   }
 
-  handleInput(key, value) {
-    this.props.dispatch(A.makeTransferFormUpdate(key, value));
-  }
-
-  initiateTransfer(){
-    const { dispatch, params, transfer } = this.props;
-    const { accountId } = params;
-    const { form } = transfer;
-    const formKeys = Object.keys(form);
-    if (!formKeys.length || !form['amount'] || !form['account']) {
-      return;
-    }
-    dispatch(A.makeTransfer(accountId, transfer.form ))
-      .then(() => new Promise((rs) => {
-          setTimeout(() => {
-            this.ensureAccounts();
-            this.ensureTransfers();
-            rs();
-          }, 1500);
-        })
-      );
-  }
 
   render () {
 
@@ -162,33 +133,18 @@ export class Account extends React.Component {
       }
     }
 
-    const transferTo = [].concat(accounts.own.reduce((memo, item, idx) => {
-      const { balance, title, accountId: itemAccountId } = item;
-
-      if (itemAccountId != accountId) {
-        memo.push({
-          value: itemAccountId ,
-          label: `${title}: ${ moneyText(balance) }`
-        });
-      }
-      return memo;
-    }, []),
-      accounts.other.reduce((memo, item, idx) => {
-      if (!((item.id == accountId) || (item.accountId == accountId))) {
-        memo.push({
-          value: item.accountId || item.id,
-          label: `${item.title}${ item.description ? ': ' + item.description.substr(0, 10): '' }`
-        });
-      }
-      return memo;
-    }, []));
-
+    const onAfterTransfer = () => new Promise((rs) => {
+      setTimeout(() => {
+        this.ensureAccounts();
+        this.ensureTransfers();
+        rs();
+      }, 1500);
+    });
     const { title: titleRaw, description: descriptionRaw, balance } = account;
 
     const title = titleRaw || '—';
     const description = descriptionRaw || '—';
 
-    const transferDisabled = this.props.transfer.loading;
 
     return (
       <div key={accountId}>
@@ -227,54 +183,7 @@ export class Account extends React.Component {
             <h3>You can transfer money to accounts:</h3>
           </Col>
         </Row>
-        <Row>
-          <Col sm={4}>
-            <label>Transfer To:</label>
-            <Select
-              className="transfer-account-dd"
-              value={read(this.props.transfer, 'form.account', '')}
-              clearable={true}
-              options={transferTo}
-              disabled={transferDisabled}
-              onChange={this.handleInput.bind(this, 'account')}
-            />
-          </Col>
-          <Col sm={3}>
-            <Input type="text"
-                   className=""
-                   label="Amount:"
-                   placeholder="Amount"
-                   name="amount"
-                   addonBefore={
-                 (<BS.Glyphicon glyph="usd" />)
-                 }
-                   addonAfter=".00"
-                   disabled={transferDisabled}
-                   value={read(this.props.transfer, 'form.amount', '')}
-                   errors={read(this.props.transfer, 'errors.amount', []) || []}
-                   onChange={this.handleInput.bind(this, 'amount')}
-            />
-            </Col>
-          <Col sm={3}>
-            <Input type="textarea"
-                   className=""
-                   label="Description:"
-                   placeholder="Description"
-                   name="description"
-                   disabled={transferDisabled}
-                   value={read(this.props.transfer, 'form.description', '') || ''}
-                   errors={read(this.props.transfer, 'errors.description', []) || []}
-                   onChange={this.handleInput.bind(this, 'description')}
-            />
-          </Col>
-          <Col sm={2}>
-            <br/>
-            <Button bsStyle="primary"
-                    disabled={transferDisabled}
-                    onClick={!transferDisabled && this.initiateTransfer.bind(this)}>Transfer</Button>
-          </Col>
-        </Row>
-
+        <TransferForm {...this.props} onAfterTransfer={ onAfterTransfer } />
         <Row>
           <Col xs={12}>
             <h3>Transfer History:</h3>

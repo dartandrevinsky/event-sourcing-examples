@@ -36,7 +36,7 @@ const formValidation = (payload) => ['title', 'balance', 'description'].reduce((
   switch (prop) {
     case 'description':
       if (value.length > 400) {
-        result.push('need to less than 400 symbols long');
+        result.push('need to be less than 400 symbols long');
       }
 
   }

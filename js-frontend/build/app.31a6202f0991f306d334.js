@@ -108,11 +108,11 @@ webpackJsonp([0,3],{
 	
 	var _Account2 = _interopRequireDefault(_Account);
 	
-	var _SignIn = __webpack_require__(605);
+	var _SignIn = __webpack_require__(606);
 	
 	var _SignIn2 = _interopRequireDefault(_SignIn);
 	
-	var _SignUp = __webpack_require__(608);
+	var _SignUp = __webpack_require__(609);
 	
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 	
@@ -4395,7 +4395,7 @@ webpackJsonp([0,3],{
 	    switch (prop) {
 	      case 'description':
 	        if (value.length > 400) {
-	          result.push('need to less than 400 symbols long');
+	          result.push('need to be less than 400 symbols long');
 	        }
 	    }
 	
@@ -5023,7 +5023,7 @@ webpackJsonp([0,3],{
 	    switch (prop) {
 	      case 'description':
 	        if (value.length > 400) {
-	          result.push('need to less than 400 symbols long');
+	          result.push('need to be less than 400 symbols long');
 	        }
 	
 	    }
@@ -5462,23 +5462,15 @@ webpackJsonp([0,3],{
 	
 	var _reactRedux = __webpack_require__(170);
 	
+	var _reactRouter = __webpack_require__(183);
+	
 	var _reactBootstrap = __webpack_require__(334);
 	
-	var BS = _interopRequireWildcard(_reactBootstrap);
-	
-	var _reactSelect = __webpack_require__(591);
-	
-	var _reactSelect2 = _interopRequireDefault(_reactSelect);
-	
-	var _Input = __webpack_require__(589);
-	
-	var _Input2 = _interopRequireDefault(_Input);
+	var _TransferForm = __webpack_require__(602);
 	
 	var _Money = __webpack_require__(599);
 	
-	var _TransfersTable = __webpack_require__(602);
-	
-	var _reactRouter = __webpack_require__(183);
+	var _TransfersTable = __webpack_require__(603);
 	
 	var _IndexPanel = __webpack_require__(600);
 	
@@ -5492,11 +5484,7 @@ webpackJsonp([0,3],{
 	
 	var A = _interopRequireWildcard(_entities);
 	
-	var _readProp = __webpack_require__(332);
-	
-	var _readProp2 = _interopRequireDefault(_readProp);
-	
-	var _blockedExecution = __webpack_require__(604);
+	var _blockedExecution = __webpack_require__(605);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -5509,8 +5497,6 @@ webpackJsonp([0,3],{
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by andrew on 12/02/16.
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	// import Spinner from "react-loader";
 	
 	
 	var resetModals = {
@@ -5627,39 +5613,10 @@ webpackJsonp([0,3],{
 	      this.setState(_extends({}, resetModals));
 	    }
 	  }, {
-	    key: "handleInput",
-	    value: function handleInput(key, value) {
-	      this.props.dispatch(A.makeTransferFormUpdate(key, value));
-	    }
-	  }, {
-	    key: "initiateTransfer",
-	    value: function initiateTransfer() {
-	      var _this2 = this;
-	
-	      var _props3 = this.props;
-	      var dispatch = _props3.dispatch;
-	      var params = _props3.params;
-	      var transfer = _props3.transfer;
-	      var accountId = params.accountId;
-	      var form = transfer.form;
-	
-	      var formKeys = Object.keys(form);
-	      if (!formKeys.length || !form['amount'] || !form['account']) {
-	        return;
-	      }
-	      dispatch(A.makeTransfer(accountId, transfer.form)).then(function () {
-	        return new Promise(function (rs) {
-	          setTimeout(function () {
-	            _this2.ensureAccounts();
-	            _this2.ensureTransfers();
-	            rs();
-	          }, 1500);
-	        });
-	      });
-	    }
-	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _this2 = this;
+	
 	      var showAccountModal = this.state.showAccountModal;
 	      var params = this.props.params;
 	      var _props$ui = this.props.ui;
@@ -5710,29 +5667,15 @@ webpackJsonp([0,3],{
 	        }
 	      }
 	
-	      var transferTo = [].concat(accounts.own.reduce(function (memo, item, idx) {
-	        var balance = item.balance;
-	        var title = item.title;
-	        var itemAccountId = item.accountId;
-	
-	
-	        if (itemAccountId != accountId) {
-	          memo.push({
-	            value: itemAccountId,
-	            label: title + ": " + (0, _Money.moneyText)(balance)
-	          });
-	        }
-	        return memo;
-	      }, []), accounts.other.reduce(function (memo, item, idx) {
-	        if (!(item.id == accountId || item.accountId == accountId)) {
-	          memo.push({
-	            value: item.accountId || item.id,
-	            label: "" + item.title + (item.description ? ': ' + item.description.substr(0, 10) : '')
-	          });
-	        }
-	        return memo;
-	      }, []));
-	
+	      var onAfterTransfer = function onAfterTransfer() {
+	        return new Promise(function (rs) {
+	          setTimeout(function () {
+	            _this2.ensureAccounts();
+	            _this2.ensureTransfers();
+	            rs();
+	          }, 1500);
+	        });
+	      };
 	      var titleRaw = account.title;
 	      var descriptionRaw = account.description;
 	      var balance = account.balance;
@@ -5740,8 +5683,6 @@ webpackJsonp([0,3],{
 	
 	      var title = titleRaw || '—';
 	      var description = descriptionRaw || '—';
-	
-	      var transferDisabled = this.props.transfer.loading;
 	
 	      return _react2.default.createElement(
 	        "div",
@@ -5839,69 +5780,7 @@ webpackJsonp([0,3],{
 	            )
 	          )
 	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Row,
-	          null,
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { sm: 4 },
-	            _react2.default.createElement(
-	              "label",
-	              null,
-	              "Transfer To:"
-	            ),
-	            _react2.default.createElement(_reactSelect2.default, {
-	              className: "transfer-account-dd",
-	              value: (0, _readProp2.default)(this.props.transfer, 'form.account', ''),
-	              clearable: true,
-	              options: transferTo,
-	              disabled: transferDisabled,
-	              onChange: this.handleInput.bind(this, 'account')
-	            })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { sm: 3 },
-	            _react2.default.createElement(_Input2.default, { type: "text",
-	              className: "",
-	              label: "Amount:",
-	              placeholder: "Amount",
-	              name: "amount",
-	              addonBefore: _react2.default.createElement(BS.Glyphicon, { glyph: "usd" }),
-	              addonAfter: ".00",
-	              disabled: transferDisabled,
-	              value: (0, _readProp2.default)(this.props.transfer, 'form.amount', ''),
-	              errors: (0, _readProp2.default)(this.props.transfer, 'errors.amount', []) || [],
-	              onChange: this.handleInput.bind(this, 'amount')
-	            })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { sm: 3 },
-	            _react2.default.createElement(_Input2.default, { type: "textarea",
-	              className: "",
-	              label: "Description:",
-	              placeholder: "Description",
-	              name: "description",
-	              disabled: transferDisabled,
-	              value: (0, _readProp2.default)(this.props.transfer, 'form.description', '') || '',
-	              errors: (0, _readProp2.default)(this.props.transfer, 'errors.description', []) || [],
-	              onChange: this.handleInput.bind(this, 'description')
-	            })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Col,
-	            { sm: 2 },
-	            _react2.default.createElement("br", null),
-	            _react2.default.createElement(
-	              _reactBootstrap.Button,
-	              { bsStyle: "primary",
-	                disabled: transferDisabled,
-	                onClick: !transferDisabled && this.initiateTransfer.bind(this) },
-	              "Transfer"
-	            )
-	          )
-	        ),
+	        _react2.default.createElement(_TransferForm.TransferForm, _extends({}, this.props, { onAfterTransfer: onAfterTransfer })),
 	        _react2.default.createElement(
 	          _reactBootstrap.Row,
 	          null,
@@ -5956,6 +5835,253 @@ webpackJsonp([0,3],{
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.TransferForm = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(334);
+	
+	var BS = _interopRequireWildcard(_reactBootstrap);
+	
+	var _reactSelect = __webpack_require__(591);
+	
+	var _reactSelect2 = _interopRequireDefault(_reactSelect);
+	
+	var _Input = __webpack_require__(589);
+	
+	var _Input2 = _interopRequireDefault(_Input);
+	
+	var _Money = __webpack_require__(599);
+	
+	var _readProp = __webpack_require__(332);
+	
+	var _readProp2 = _interopRequireDefault(_readProp);
+	
+	var _entities = __webpack_require__(327);
+	
+	var A = _interopRequireWildcard(_entities);
+	
+	var _AuxErrorLabel = __webpack_require__(590);
+	
+	var _AuxErrorLabel2 = _interopRequireDefault(_AuxErrorLabel);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by andrew on 10/7/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	
+	var formValidation = function formValidation(payload) {
+	  return ['account', 'amount', 'description'].reduce(function (memo, prop) {
+	    var result = [];
+	    var value = (payload[prop] || '').replace(/(^\s+)|(\s+$)/g, '');
+	
+	    switch (prop) {
+	      case 'account':
+	      case 'amount':
+	        if (/^$/.test(value)) {
+	          result.push('required');
+	        }
+	    }
+	
+	    switch (prop) {
+	      case 'amount':
+	        if (!/\d+/.test(value)) {
+	          result.push('need to be a number');
+	        }
+	    }
+	
+	    switch (prop) {
+	      case 'description':
+	        if (value.length > 400) {
+	          result.push('need to be less than 400 symbols long');
+	        }
+	
+	    }
+	    if (result.length) {
+	      memo[prop] = result;
+	      memo.hasErrors = true;
+	    }
+	    return memo;
+	  }, {});
+	};
+	
+	var TransferForm = exports.TransferForm = function (_Component) {
+	  _inherits(TransferForm, _Component);
+	
+	  function TransferForm() {
+	    _classCallCheck(this, TransferForm);
+	
+	    return _possibleConstructorReturn(this, (TransferForm.__proto__ || Object.getPrototypeOf(TransferForm)).apply(this, arguments));
+	  }
+	
+	  _createClass(TransferForm, [{
+	    key: "handleInput",
+	    value: function handleInput(key, value) {
+	      this.props.dispatch(A.makeTransferFormUpdate(key, value));
+	    }
+	  }, {
+	    key: "initiateTransfer",
+	    value: function initiateTransfer() {
+	      var _props = this.props;
+	      var dispatch = _props.dispatch;
+	      var params = _props.params;
+	      var transfer = _props.transfer;
+	      var accountId = params.accountId;
+	      var form = transfer.form;
+	
+	      // const payload = {
+	      //   account: form.account,
+	      //   amount: form.amount,
+	      //   description: form.description
+	      // };
+	
+	      var validationErrors = formValidation(form);
+	      if (validationErrors.hasErrors) {
+	        this.props.dispatch(A.makeTransferError(validationErrors));
+	        return;
+	      }
+	
+	      dispatch(A.makeTransfer(accountId, form)).then(this.props.onAfterTransfer);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var params = this.props.params;
+	      var accountId = params.accountId;
+	      var _props$data = this.props.data;
+	      var entities = _props$data.entities;
+	      var accounts = _props$data.accounts;
+	
+	      // const  account = entities[accountId];
+	
+	      var transferTo = [].concat(accounts.own.reduce(function (memo, item, idx) {
+	        var balance = item.balance;
+	        var title = item.title;
+	        var itemAccountId = item.accountId;
+	
+	
+	        if (itemAccountId != accountId) {
+	          memo.push({
+	            value: itemAccountId,
+	            label: title + ": " + (0, _Money.moneyText)(balance)
+	          });
+	        }
+	        return memo;
+	      }, []), accounts.other.reduce(function (memo, item, idx) {
+	        if (!(item.id == accountId || item.accountId == accountId)) {
+	          memo.push({
+	            value: item.accountId || item.id,
+	            label: "" + item.title + (item.description ? ': ' + item.description.substr(0, 10) : '')
+	          });
+	        }
+	        return memo;
+	      }, []));
+	
+	      var transferDisabled = this.props.transfer.loading;
+	
+	      return _react2.default.createElement(
+	        _reactBootstrap.Row,
+	        { className: "transfer-form" },
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { sm: 4 },
+	          _react2.default.createElement(
+	            "label",
+	            null,
+	            "Transfer To:"
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "form-group" },
+	            _react2.default.createElement(_reactSelect2.default, {
+	              className: "transfer-account-dd",
+	              value: (0, _readProp2.default)(this.props.transfer, 'form.account', ''),
+	              clearable: true,
+	              options: transferTo,
+	              disabled: transferDisabled,
+	              onChange: this.handleInput.bind(this, 'account')
+	            }),
+	            _react2.default.createElement(_AuxErrorLabel2.default, {
+	              label: "Account:",
+	              errors: (0, _readProp2.default)(this.props.transfer, 'errors.account', []) || []
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { sm: 3 },
+	          _react2.default.createElement(_Input2.default, { type: "text",
+	            className: "",
+	            label: "Amount:",
+	            placeholder: "Amount",
+	            name: "amount",
+	            addonBefore: _react2.default.createElement(BS.Glyphicon, { glyph: "usd" }),
+	            addonAfter: ".00",
+	            disabled: transferDisabled,
+	            value: (0, _readProp2.default)(this.props.transfer, 'form.amount', ''),
+	            errors: (0, _readProp2.default)(this.props.transfer, 'errors.amount', []) || [],
+	            onChange: this.handleInput.bind(this, 'amount')
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { sm: 3 },
+	          _react2.default.createElement(_Input2.default, { type: "textarea",
+	            className: "",
+	            label: "Description:",
+	            placeholder: "Description",
+	            name: "description",
+	            disabled: transferDisabled,
+	            value: (0, _readProp2.default)(this.props.transfer, 'form.description', '') || '',
+	            errors: (0, _readProp2.default)(this.props.transfer, 'errors.description', []) || [],
+	            onChange: this.handleInput.bind(this, 'description')
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Col,
+	          { sm: 2 },
+	          _react2.default.createElement("br", null),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { bsStyle: "primary",
+	              disabled: transferDisabled,
+	              onClick: !transferDisabled && this.initiateTransfer.bind(this) },
+	            "Transfer"
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TransferForm;
+	}(_react.Component);
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "TransferForm.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+
+/***/ },
+
+/***/ 603:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.TransfersTable = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -5972,7 +6098,7 @@ webpackJsonp([0,3],{
 	
 	var BS = _interopRequireWildcard(_reactBootstrap);
 	
-	var _reactTimeago = __webpack_require__(603);
+	var _reactTimeago = __webpack_require__(604);
 	
 	var _reactTimeago2 = _interopRequireDefault(_reactTimeago);
 	
@@ -6234,7 +6360,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 604:
+/***/ 605:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -6278,7 +6404,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 605:
+/***/ 606:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -6304,7 +6430,7 @@ webpackJsonp([0,3],{
 	
 	var _reduxRouter = __webpack_require__(246);
 	
-	var _EmailSignInForm = __webpack_require__(606);
+	var _EmailSignInForm = __webpack_require__(607);
 	
 	var _readProp = __webpack_require__(332);
 	
@@ -6391,7 +6517,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 606:
+/***/ 607:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -6431,7 +6557,7 @@ webpackJsonp([0,3],{
 	
 	var _AuxErrorLabel2 = _interopRequireDefault(_AuxErrorLabel);
 	
-	var _signIn = __webpack_require__(607);
+	var _signIn = __webpack_require__(608);
 	
 	var AS = _interopRequireWildcard(_signIn);
 	
@@ -6585,7 +6711,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 607:
+/***/ 608:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -6648,7 +6774,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 608:
+/***/ 609:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -6680,7 +6806,7 @@ webpackJsonp([0,3],{
 	
 	var _reactRouter = __webpack_require__(183);
 	
-	var _EmailSignUpForm = __webpack_require__(609);
+	var _EmailSignUpForm = __webpack_require__(610);
 	
 	var _EmailSignUpForm2 = _interopRequireDefault(_EmailSignUpForm);
 	
@@ -6761,7 +6887,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 609:
+/***/ 610:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -6798,13 +6924,13 @@ webpackJsonp([0,3],{
 	
 	var _AuxErrorLabel2 = _interopRequireDefault(_AuxErrorLabel);
 	
-	var _formToPayloadMappers = __webpack_require__(610);
+	var _formToPayloadMappers = __webpack_require__(611);
 	
 	var _readProp = __webpack_require__(332);
 	
 	var _readProp2 = _interopRequireDefault(_readProp);
 	
-	var _signUp = __webpack_require__(611);
+	var _signUp = __webpack_require__(612);
 	
 	var AS = _interopRequireWildcard(_signUp);
 	
@@ -7056,7 +7182,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 610:
+/***/ 611:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -7104,7 +7230,7 @@ webpackJsonp([0,3],{
 
 /***/ },
 
-/***/ 611:
+/***/ 612:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/andrew/dev/clients/ES/code/event-sourcing-examples/js-frontend/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -7127,7 +7253,7 @@ webpackJsonp([0,3],{
 	
 	var _api = __webpack_require__(321);
 	
-	var _signIn = __webpack_require__(607);
+	var _signIn = __webpack_require__(608);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -7165,4 +7291,4 @@ webpackJsonp([0,3],{
 /***/ }
 
 });
-//# sourceMappingURL=app.fd05c6aaa4ba97419c4e.js.map
+//# sourceMappingURL=app.31a6202f0991f306d334.js.map
